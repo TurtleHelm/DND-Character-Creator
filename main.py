@@ -1,10 +1,8 @@
-#Custom Made Imports
-from createACharacter import CreateNewCharacter
-from utils.markdown import style
-from utils.data import version
-from utils.util import isBool
+from data import Character, isBool
 
-print(style.BOLD + f'Welcome to the D&D Random Character Generator ({version})' + style.END)
+char = Character()
+
+print(f'Welcome to the D&D Random Character Generator ({char.data.version})')
 
 isTrue = True
 
@@ -14,7 +12,8 @@ while isTrue:
 	isTrue = isBool(userInput)
 
 	if isTrue:
+		char = Character()
 		print('===============================================================')
-		CreateNewCharacter()
+		print(char.details)
 
 	else: print('Exiting Character Generator...')
