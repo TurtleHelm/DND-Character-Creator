@@ -233,7 +233,7 @@ class Barbarian(Class):
                        ['Club', 'Dagger', 'Quarterstaff', 'Scimitar', 'Sickle', 'Shortspear', 'Sling', 'Longspear', 'Battleaxe', 'Greatsword', 'Greataxe', 'Warhammer', 'Lance', 'Longsword'],
                        ['Padded', 'Leather', 'Studded Leather', 'Hide', 'Chain Shirt', 'Scalemail', 'Breastplate', 'Halfplate'],
                        ['Athletics', 'Animal Handling', 'Intimidation', 'Nature', 'Perception', 'Survival'],
-                       ['Rage', 'Unarmored Defense', 'Reckless Attack'], 12, '4d4', 'outlander', ['Strength', 'Constitution'])
+                       ['Rage', 'Unarmored Defense', 'Reckless Attack'], 12, '4d4', 'outlander', ['Strength', 'Constitution'], ['None'])
 
 class Bard(Class):
     def __init__(self):
@@ -263,31 +263,28 @@ class Fighter(Class):
                          ['Club', 'Dagger', 'Quarterstaff', 'Scimitar', 'Sickle', 'Shortspear', 'Sling', 'Longspear', 'Battleaxe', 'Greatsword', 'Greataxe', 'Warhammer', 'Lance', 'Longsword'],
                          ['Padded', 'Leather', 'Studded Leather', 'Hide', 'Chain Shirt', 'Scalemail', 'Breastplate', 'Halfplate', 'Ringmail', 'Chainmail', 'Splint', 'Plate'],
                          ['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Intimidation', 'Perception', "Survival"], ['Two-Weapon Fighting', 'Second Wind'],
-                         10, '6d4', 'soldier', ['Strength', 'Constitution'])
+                         10, '6d4', 'soldier', ['Strength', 'Constitution'], ['None'])
 
 class Monk(Class):
     def __init__(self):
         super().__init__('Monk', 
                         ['Club', 'Shortsword', 'Dagger', 'Handaxe', 'Javelin', 'Nunchaku', 'Quarterstaff', 'Sling'], ['None'], 
                         ['Acrobatics', 'Athletics', 'History', 'Insight', 'Religion', 'Stealth'], ['Martial Arts', 'Stunning Fist', 'Unarmored Movement'], 8, '5d4', 
-                        'hermit', ['Strength', 'Dexterity'])
+                        'hermit', ['Strength', 'Dexterity'], ['None'])
 
 class Paladin(Class):
     def __init__(self):
         super().__init__('Paladin', 
                         ['Club', 'Dagger', 'Quarterstaff', 'Scimitar', 'Sickle', 'Shortspear', 'Sling', 'Longspear', 'Battleaxe', 'Greatsword', 'Greataxe', 'Warhammer', 'Lance', 'Longsword'], ['Padded', 'Leather', 'Studded Leather', 'Hide', 'Chain Shirt', 'Scalemail', 'Breastplate', 'Halfplate', 'Ringmail', 'Chainmail', 'Splint', 'Plate'],
                         ['Athletics', 'Insight', 'Intimidation', 'Medicine', 'Persuasion', 'Religion'], ['Divine Sense', 'Lay on Hands'], 10, '6d4',
-                        'noble', ['Wisdom', 'Charisma'],
-                        ['Cure Wounds', 'Bless', 'Divine Favor'])
+                        'noble', ['Wisdom', 'Charisma'], ['Cure Wounds', 'Bless', 'Divine Favor'])
 
 class Ranger(Class):
     def __init__(self):
         super().__init__('Ranger',
                         ['Club', 'Dagger', 'Quarterstaff', 'Scimitar', 'Sickle', 'Shortspear', 'Sling', 'Longspear', 'Battleaxe', 'Greatsword', 'Greataxe', 'Warhammer', 'Lance', 'Longsword'], ['Padded', 'Leather', 'Studded Leather', 'Hide', 'Chain Shirt', 'Scalemail', 'Breastplate', 'Halfplate'],
                         ['Animal Handling', 'Athletics', 'Insight', 'Investigation', 'Nature', 'Perception', 'Stealth', 'Survival'],
-                        ['Favored Enemy', 'Natural Explorer'], 10, '6d4',
-                        'outlander', ['Strength', 'Dexterity'],
-                        ['Alarm', 'Fog Cloud', 'Longstrider'])
+                        ['Favored Enemy', 'Natural Explorer'], 10, '6d4', 'outlander', ['Strength', 'Dexterity'], ['Alarm', 'Fog Cloud', 'Longstrider'])
 
 class Rogue(Class):
     def __init__(self):
@@ -295,8 +292,8 @@ class Rogue(Class):
                         ['Crossbow, hand', 'Sap', 'Shortbow', 'Rapier', 'Sword, short', 'Club', 'Dagger', 'Javelin', 'Mace, light', 'Mace, heavy', 'Shortspear', 'Sickle', 
                          'Spear', 'Gauntlet, spiked', 'Greatclub', 'Morningstar', 'Quarterstaff', 'Scythe', 'Sling', 'Crossbow, repeating light', 'Crossbow, repeating heavy'], 
                         ['Padded', 'Leather', 'Studded Leather'],
-                        ['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Performace', 'Persuasion', 'Sleight of Hand', 'Survival'], ['Expertise', 'Sneak Attack', 'Theives\' Cant'],
-                        8, '5d4', 'charlatan', ['Dexterity', 'Intelligence'])
+                        ['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Performace', 'Persuasion', 'Sleight of Hand', 'Survival'], 
+                        ['Expertise', 'Sneak Attack', 'Theives\' Cant'], 8, '5d4', 'charlatan', ['Dexterity', 'Intelligence'], ['None'])
 
 class Sorcerer(Class):
     def __init__(self):
@@ -331,13 +328,12 @@ class Character:
         self.race = self.data.PickRandomRace()
         self.cl = self.data.PickRandomClass()
         self.langs = list(set([choice(self.race.attributes.get('languages')) for i in range(randrange(0, len(self.race.attributes.get('languages'))))]))
-        self.spells = [(choice(self.attributes.get('spells')) for i in range(randrange(0, len(self.race.attributes.get('spells'))))) if self.race.attributes.__contains__('spells') else 'None']
+        self.spells = list(set([choice(self.cl.spells) for i in range(randrange(0, len(self.cl.spells)))]))
         self.name = f'{self.race.firstName} {self.race.lastName}'
         self.info = self.data.PickRandomAttributes()
         self.coins = [randrange(0, 10), randrange(0, 6), randrange(0, 4)]
         self.favour = randrange(0, 100)
-        
-        # self.saving_throw_values = {throw: value for (throw, value) in self.cl.saving_throws}
+        self.saving_throw_values = [throw for throw in self.cl.saving_throws]
 
     @property
     def RollStats(self): 
@@ -360,7 +356,7 @@ class Character:
 
     @property
     def details(self):
-    
+        
         return f'''
 Character Details
 Name: {self.name}
@@ -373,6 +369,8 @@ Size: {self.race.attributes.get('size')}
 Speed: {self.race.attributes.get('speed')}
 Trait(s): {StringifyArr(self.race.attributes.get('traits'))}
 Language(s): {StringifyArr(self.langs) if self.langs != [] else 'Common'}
+Spell(s): {StringifyArr(self.spells) if self.spells != [] else 'None'}
+Saving Throw(s): {StringifyArr(self.saving_throw_values)}
 Worships: {self.info.get('deity')}
 Divine Favour: {self.favour}
 
@@ -403,7 +401,7 @@ def RollDice(diceNum:str='4d4', startPoint:int=0):
 
 def isBool(strBool: str=''): return True if strBool == 'yes' or strBool == 'y' else False
 
-def StringifyArr(arr):
+def StringifyArr(arr=[]):
 
     arrString = ''
     for i, string in enumerate(arr):
