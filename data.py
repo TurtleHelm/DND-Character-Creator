@@ -1,4 +1,4 @@
-from random import choice, randrange, random
+from random import choice, randrange, random, sample
 
 class Data:
     def __init__(self): 
@@ -26,24 +26,15 @@ class Data:
     @property
     def PickRandomClass(self): return choice(self.classes)
     
-    def PickRandomAttributes(self):
-        attrb = {
-            'deity': choice(self.attributes['deities']),
-            'hair_color': choice(self.attributes['hair_colors']),
-            'hair_type': choice(self.attributes['hair_types']),
-            'eye_color': choice(self.attributes['eye_colors']),
-            'appearance': choice(self.attributes['appearance']),
-            'talent': choice(self.attributes['talents']),
-            'mannerism': choice(self.attributes['mannerisms']),
-        }
+    def PickRandomAttributes(self): return {attr: choice(self.attributes[attr]) for attr in ['deities', 'hair_colors', 'hair_types', 'eye_colors', 'appearance', 'talents', 'mannerisms']}
         
-        return attrb
-
     @property
     def __repr__(self): return f'Dataset Version {self.version}'
 
+# ---- #
+
 class Race:
-    def __init__(self, race:str='', firstNames=['None'], lastNames=['None'], attributes=['None']):
+    def __init__(self, race:str='', firstNames:list=['None'], lastNames:list=['None'], attributes:list=['None']):
         self.race = race
         self.firstNames = firstNames
         self.lastNames = lastNames
@@ -56,23 +47,18 @@ class Human(Race):
         super().__init__(self)
         self.race = 'Human'
         self.firstName = choice([
-            'Aseir', 'Bardeid', 'Haseid', 'Khemed', 'Mehmen', 'Sudeiman', 'Zasheir',
-            'Darvin', 'Dorn', 'Evendur', 'Gorstag', 'Grim', 'Helm', 'Malark', 'Morn', 'Randal', 'Stedd',
-            'Bor', 'Fodel', 'Glar', 'Grigor', 'Igan', 'Ivor', 'Kosef', 'Mival', 'Orel', 'Pavel', 'Sergor',
-            'Ander', 'Blath', 'Bran', 'Frath', 'Geth', 'Lander', 'Luth', 'Malcer', 'Stor', 'Taman', 'Urth',
-            'Aoth', 'Bareris', 'Ehput Ki', 'Kethoth', 'Mumed', 'Ramas', 'So Kehur', 'Thazar De', 'Urhur',
-            'Borivik', 'Faurgar', 'Jandar', 'Kanithar', 'Madislak', 'Ralmevik', 'Shaumar', 'Vladislak',
-            'Chien', 'Huang', 'Kao', 'Kung', 'Lao', 'Ling', 'Mei', 'Pin', 'Shin', 'Sum', 'Tan', 'Wan',
-            'Anton', 'Diero', 'Marcon', 'Pieron', 'Rimardo', 'Romero', 'Salazar', 'Umbero'
+            'Aseir', 'Bardeid', 'Haseid', 'Khemed', 'Mehmen', 'Sudeiman', 'Zasheir', 'Darvin', 'Dorn', 'Evendur', 'Gorstag', 'Grim', 
+            'Helm', 'Malark', 'Morn', 'Randal', 'Stedd', 'Bor', 'Fodel', 'Glar', 'Grigor', 'Igan', 'Ivor', 'Kosef', 'Mival', 'Orel', 
+            'Pavel', 'Sergor', 'Ander', 'Blath', 'Bran', 'Frath', 'Geth', 'Lander', 'Luth', 'Malcer', 'Stor', 'Taman', 'Urth', 'Aoth', 
+            'Bareris', 'Ehput Ki', 'Kethoth', 'Mumed', 'Ramas', 'So Kehur', 'Thazar De', 'Urhur', 'Borivik', 'Faurgar', 'Jandar', 
+            'Kanithar', 'Madislak', 'Ralmevik', 'Shaumar', 'Vladislak', 'Chien', 'Huang', 'Kao', 'Kung', 'Lao', 'Ling', 'Mei', 'Pin', 
+            'Shin', 'Sum', 'Tan', 'Wan', 'Anton', 'Diero', 'Marcon', 'Pieron', 'Rimardo', 'Romero', 'Salazar', 'Umbero'
         ])
         self.lastName = choice([
-            'Basha', 'Dumein', 'Jassan', 'Khalid', 'Mostana', 'Pashar', 'Rein',
-            'Amblecrown', 'Buckman', 'Dundragon', 'Evenwood', 'Greycastle', 'Tallstag',
-            'Bersk', 'Chernin', 'Dotsk', 'Kulenov', 'Marsk', 'Nemetsk', 'Shemov', 'Starag',
-            'Brightwood', 'Helder', 'Hornraven', 'Lackman', 'Stormwind', 'Windrivver',
-            'Ankhalab', 'Anskuld', 'Fezim', 'Hahpet', 'Nathandem', 'Sepret', 'Uuthrakt',
-            'An', 'Chen', 'Chi', 'Fai', 'Jiang', 'Jun', 'Lian', 'Long', 'Meng', 'On', 'Shan', 'Shui', 'Wen',
-            'Agosto', 'Astorio', 'Calabra', 'Domine', 'Falone', 'Marivaldi', 'Pisacar', 'Ramondo'
+            'Basha', 'Dumein', 'Jassan', 'Khalid', 'Mostana', 'Pashar', 'Rein', 'Amblecrown', 'Buckman', 'Dundragon', 'Evenwood', 'Greycastle', 
+            'Tallstag', 'Bersk', 'Chernin', 'Dotsk', 'Kulenov', 'Marsk', 'Nemetsk', 'Shemov', 'Starag', 'Brightwood', 'Helder', 'Hornraven', 'Lackman', 
+            'Stormwind', 'Windrivver', 'Ankhalab', 'Anskuld', 'Fezim', 'Hahpet', 'Nathandem', 'Sepret', 'Uuthrakt', 'An', 'Chen', 'Chi', 'Fai', 'Jiang', 
+            'Jun', 'Lian', 'Long', 'Meng', 'On', 'Shan', 'Shui', 'Wen', 'Agosto', 'Astorio', 'Calabra', 'Domine', 'Falone', 'Marivaldi', 'Pisacar', 'Ramondo'
         ])
         self.attributes = {
             'age': randrange(RollDice('1d6'), 15),
@@ -200,8 +186,10 @@ class HalfOrc(Race):
             'languages': ['Orc', 'Draconic', 'Giant', 'Gnoll', 'Goblin', 'Abyssal']
         }
 
+# ---- #
+
 class Class:
-    def __init__(self, cl='', weapons=[], armor=[], skills=[], abilities=[], hp=0, gold='', background='', saving_throws=[], spells=[]):
+    def __init__(self, cl:str='', weapons:list=[], armor:list=[], skills:list=[], abilities:list=[], hp:int=0, gold:str='', background:str='', saving_throws:list=[], spells:list=[]):
         self.type = cl
         self.weapons = weapons
         self.armor = armor
@@ -305,59 +293,54 @@ class Sorcerer(Class):
 
 class Warlock(Class):
     def __init__(self):
-        super().__init__('Warlock',
-                        ['Club', 'Longsword', 'Rapier', 'Shortbow', 'Dagger', 'Mace', 'Sickle', 'Quarterstaff', 'Spear', 'Crossbow, light', 'Dart', 'Sling'], ['Padded', 'Leather', 'Studded Leather'],
-                        ['Arcana', 'Deception', 'History', 'Intimidation', 'Investigation', 'Nature', 'Religion'], ['Otherwordly Patron', 'Pact Magic'], 
-                        8, '3d4', 'charlatan', ['Widsom', 'Charisma'],
-                        ['Eldritch Blast', 'Chill Touch', 'Charm Person', 'Witch Bolt'])
+        super().__init__(
+            'Warlock', # Class
+            ['Club', 'Longsword', 'Rapier', 'Shortbow', 'Dagger', 'Mace', 'Sickle', 'Quarterstaff', 'Spear', 'Crossbow, light', 'Dart', 'Sling'], # Weapons
+            ['Padded', 'Leather', 'Studded Leather'], # Armor
+            ['Arcana', 'Deception', 'History', 'Intimidation', 'Investigation', 'Nature', 'Religion'], # Spells
+            ['Otherwordly Patron', 'Pact Magic'], # Abilities 
+            8, '3d4', 'charlatan', # HP, Gold & Background
+            ['Widsom', 'Charisma'], # Saving Throws
+            ['Eldritch Blast', 'Chill Touch', 'Charm Person', 'Witch Bolt'] # Spells
+        )
 
 class Wizard(Class):
     def __init__(self):
-        super().__init__('Wizard',
-                        ['Dagger', 'Dart', 'Sling', 'Quarterstaff', 'Crossbow, light'], ['None'],
-                        ['Arcana', 'History', 'Insight', 'Investigation', 'Medicine', 'Religion'], ['Arcane Recovery', 'Arcane Tradition'], 
-                        6, '3d4', 'sage', ['Intelligence', 'Wisdom'],
-                        ['Mage Hand', 'Light', 'Ray of Frost', 'Burning Hands', 'Charm Person', 'Mage Armor', 'Magic Missle', 'Sleep'])
+        super().__init__(
+            'Wizard', # Class
+            ['Dagger', 'Dart', 'Sling', 'Quarterstaff', 'Crossbow, light'], # Weapons
+            ['None'], # Armor
+            ['Arcana', 'History', 'Insight', 'Investigation', 'Medicine', 'Religion'], # Skills
+            ['Arcane Recovery', 'Arcane Tradition'], # Abilities
+            6, '3d4', 'sage', # HP, Gold & Background
+            ['Intelligence', 'Wisdom'], # Saving Throws
+            ['Mage Hand', 'Light', 'Ray of Frost', 'Burning Hands', 'Charm Person', 'Mage Armor', 'Magic Missle', 'Sleep'] # Spells
+        )
 
 # Base Character Traits
 class Character:
-    def __init__(self):
-        
+    def __init__(self) -> None:  
         self.data = Data()
         self.stats = self.RollStats
         self.race = self.data.PickRandomRace()
         self.cl = self.data.PickRandomClass()
-        self.langs = list(set([choice(self.race.attributes.get('languages')) for i in range(randrange(0, len(self.race.attributes.get('languages'))))]))
-        self.spells = list(set([choice(self.cl.spells) for i in range(randrange(0, len(self.cl.spells)))]))
+        self.langs = list(set([choice(self.race.attributes.get('languages')) for _ in range(randrange(len(self.race.attributes.get('languages'))))]))
+        self.spells = list(set([choice(self.cl.spells) for _ in range(randrange(len(self.cl.spells)))]))
         self.name = f'{self.race.firstName} {self.race.lastName}'
         self.info = self.data.PickRandomAttributes()
-        self.coins = [randrange(0, 10), randrange(0, 6), randrange(0, 4)]
-        self.favour = randrange(0, 100)
+        self.coins = [randrange(10), randrange(6), randrange(4)]
+        self.favour = randrange(100)
         self.saving_throw_values = [throw for throw in self.cl.saving_throws]
 
     @property
-    def RollStats(self): 
-        stats = { 'str': 0, 'dex': 0, 'con': 0, 'int': 0, 'wis': 0, 'cha': 0 }
+    def RollStats(self) -> dict: 
+        stats = {stat: val for stat, val in zip(['str', 'dex', 'con', 'int', 'wis', 'cha'], sample(range(1, 11), 6))}
+        while sum(stats.values()) > 30: stats = {stat: val for stat, val in zip(['str', 'dex', 'con', 'int', 'wis', 'cha'], sample(range(1, 11), 6))}
         
-        totalStatNum = 0
-        
-        for stat in stats:
-            newStat = randrange(0, 10)
-            totalStatNum += newStat
-            
-            while totalStatNum > 30: 
-                totalStatNum -= newStat
-                newStat = randrange(0, 10)
-                totalStatNum += newStat
-            
-            stats[stat] = newStat
-            
         return stats
 
     @property
-    def details(self):
-        
-        return f'''
+    def details(self) -> str: return f'''
 Character Details
 Name: {self.name}
 Race: {self.race.race}
@@ -367,10 +350,10 @@ Height: {self.race.attributes.get('height')}
 Weight: {self.race.attributes.get('weight')}
 Size: {self.race.attributes.get('size')}
 Speed: {self.race.attributes.get('speed')}
-Trait(s): {StringifyArr(self.race.attributes.get('traits'))}
-Language(s): {StringifyArr(self.langs) if self.langs != [] else 'Common'}
-Spell(s): {StringifyArr(self.spells) if self.spells != [] else 'None'}
-Saving Throw(s): {StringifyArr(self.saving_throw_values)}
+Trait(s): {', '.join(self.race.attributes.get('traits'))}
+Language(s): {', '.join(self.langs) if self.langs else 'Common'}
+Spell(s): {', '.join(self.spells) if self.spells else 'None'}
+Saving Throw(s): {', '.join(self.saving_throw_values)}
 Worships: {self.info.get('deity')}
 Divine Favour: {self.favour}
 
@@ -387,24 +370,20 @@ Coins Held: {self.coins[2]} gold, {self.coins[1]} silver {self.coins[0]} copper
 Exchange Rate
 1 Gold = {self.data.exchangeRate[0]} Silver
 1 Silver = {self.data.exchangeRate[1]} Copper
+
+Stats
+Strength: {self.stats['str']}
+Dexterity: {self.stats['dex']}
+Constitution: {self.stats['con']}
+Intelligence: {self.stats['int']}
+Wisdom: {self.stats['wis']}
+Charisma: {self.stats['cha']}
+Total Stats: {sum(self.stats.values())}
 '''
 
     @property
-    def __str__(self): return f'Character({self.name}, {self.race.race}, {self.cl.type})'
+    def __str__(self) -> str: return f'Character({self.name}, {self.race.race}, {self.cl.type})'
 
-# Independent Functions 
+# Independent Functions
 
-def RollDice(diceNum:str='4d4', startPoint:int=0):
-
-    for num in [randrange(1, int(diceNum.split('d')[1])) for die in range(int(diceNum.split('d')[0]))]: startPoint += num
-    return startPoint
-
-def isBool(strBool: str=''): return True if strBool == 'yes' or strBool == 'y' else False
-
-def StringifyArr(arr=[]):
-
-    arrString = ''
-    for i, string in enumerate(arr):
-        if len(arr)-1 == i: arrString += string
-        else: arrString += f'{string}, '
-    return arrString
+def RollDice(diceNum:str='4d4') -> int: return sum([randrange(1, int(diceNum.split('d')[1])) for _ in range(int(diceNum.split('d')[0]))])

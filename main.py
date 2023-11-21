@@ -1,19 +1,20 @@
-from data import Character, isBool
+from data import Character
 
-char = Character()
+def main() -> None:
+    char = Character()
+    isTrue = True
+    
+    print(f'Welcome to the D&D Random Character Generator ({char.data.version})')
+    
+    while isTrue:
+        print('===============================================================')
+        isTrue = bool(int(input('Create a new character? (1/0): ')))
+        
+        if isTrue:
+            char = Character()
+            print('===============================================================')
+            print(char.details)
+            
+        else: print('Exiting Character Generator...')
 
-print(f'Welcome to the D&D Random Character Generator ({char.data.version})')
-
-isTrue = True
-
-while isTrue:
-	print('===============================================================')
-	userInput = input('Create a new character? (y/n): ').lower()
-	isTrue = isBool(userInput)
-
-	if isTrue:
-		char = Character()
-		print('===============================================================')
-		print(char.details)
-
-	else: print('Exiting Character Generator...')
+main()
